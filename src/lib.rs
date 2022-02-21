@@ -20,6 +20,7 @@ pub mod wasmedge_hostfunctionexample {
         pub fn host_function_example_add_student(student: *const c_char, len: u32) -> u32;
         pub fn host_function_example_set_class_name(name: *const c_char, len: u32);
         pub fn host_function_example_print();
+        pub fn host_function_custom_set_class_addr(addr: *const c_char, len: u32); // Extern Custom Host Func 0
     }
 }
 
@@ -54,5 +55,16 @@ pub fn add_student<S: AsRef<str>>(name: S) -> u32 {
 pub fn print() {
     unsafe {
         wasmedge_hostfunctionexample::host_function_example_print();
+    }
+}
+
+// Interface Custom Host Func 0, modified from "set_class_name"
+pub fn set_class_addr<S: AsRef<str>>(addr: S) {
+    let addr = CString::new((addr.as_ref()).as_bytes()).expect("");
+    unsafe {
+        wasmedge_hostfunctionexample::host_function_custom_set_class_addr(
+            addr.as_ptr(),
+            addr.as_bytes().len() as u32,
+            );
     }
 }

@@ -10,4 +10,8 @@ fn main() {
     num = add_student("Terry");
     println!("After adding Terry, num = {:?}", num);
     print();
+    println!("--- setting class address ---");
+    // Call Custom Host Func 0
+    set_class_addr("Hsinchu");
+    print();
 }
